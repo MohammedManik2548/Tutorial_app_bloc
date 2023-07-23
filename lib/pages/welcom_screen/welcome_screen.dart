@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tutorial_app_bloc/pages/my_home_page/my_home_page.dart';
 import 'package:tutorial_app_bloc/pages/welcom_screen/bloc/welcome_event.dart';
 import 'package:tutorial_app_bloc/pages/welcom_screen/bloc/welcome_state.dart';
 
@@ -15,6 +16,8 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  PageController pageController = PageController(initialPage: 0);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -29,6 +32,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 alignment: Alignment.topCenter,
                 children: [
                   PageView(
+                    controller: pageController,
                     onPageChanged: (index){
                       print('index value is: $index');
                       state.page = index;
@@ -93,7 +97,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         SizedBox(
           height: 345.w,
           width: 345.w,
-          child: Image.asset(imagePath),
+          child: Image.asset(
+              imagePath,
+            fit: BoxFit.cover,
+          ),
         ),
         Container(
           child: Text(
@@ -117,30 +124,45 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
           ),
         ),
-        Container(
-          margin: EdgeInsets.only(top: 100.h,left: 25.w,right: 25.w),
-          width: 325.w,
-          height: 50.w,
+        GestureDetector(
+          onTap: (){
 
-          decoration: BoxDecoration(
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(15.w),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 2,
-                offset: const Offset(0,1),
-              )
-            ],
-          ),
-          child: Center(
-            child: Text(
-              buttonName,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.normal,
+            if(index<3){
+              pageController.animateToPage(
+                  index,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.easeIn,
+              );
+            }else{
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const MyHomePage()));
+            }
+
+          },
+          child: Container(
+            margin: EdgeInsets.only(top: 100.h,left: 25.w,right: 25.w),
+            width: 325.w,
+            height: 50.w,
+
+            decoration: BoxDecoration(
+              color: Colors.blue,
+              borderRadius: BorderRadius.circular(15.w),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 2,
+                  offset: const Offset(0,1),
+                )
+              ],
+            ),
+            child: Center(
+              child: Text(
+                buttonName,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
             ),
           ),
