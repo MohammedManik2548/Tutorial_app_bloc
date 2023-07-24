@@ -7,6 +7,7 @@ import 'package:tutorial_app_bloc/pages/my_home_page/my_home_page.dart';
 import 'package:tutorial_app_bloc/pages/welcom_screen/bloc/welcome_event.dart';
 import 'package:tutorial_app_bloc/pages/welcom_screen/bloc/welcome_state.dart';
 
+import '../../common/values/colors.dart';
 import 'bloc/welcome_bloc.dart';
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -72,8 +73,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       dotsCount: 3,
                       mainAxisAlignment: MainAxisAlignment.center,
                       decorator:  DotsDecorator(
-                          color: Colors.grey,
-                          activeColor: Colors.blue,
+                          color: AppColors.primaryThirdElementText,
+                          activeColor: AppColors.primaryElement,
                           size: const Size.square(8.0),
                           activeSize: const Size(18.0, 8.0),
                           activeShape: RoundedRectangleBorder(
@@ -106,7 +107,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Text(
             title,
             style: TextStyle(
-              color: Colors.black,
+              color: AppColors.primaryText,
               fontSize: 24.sp,
               fontWeight: FontWeight.normal,
             ),
@@ -118,7 +119,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           child: Text(
             subTitle,
             style: TextStyle(
-              color: Colors.black.withOpacity(0.5),
+              color: AppColors.primarySecondaryElementText,
               fontSize: 14.sp,
               fontWeight: FontWeight.normal,
             ),
@@ -134,7 +135,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   curve: Curves.easeIn,
               );
             }else{
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const MyHomePage()));
+
+              Navigator.of(context).pushNamedAndRemoveUntil('signIn', (route) => false);
             }
 
           },
@@ -144,7 +146,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             height: 50.w,
 
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: AppColors.primaryElement,
               borderRadius: BorderRadius.circular(15.w),
               boxShadow: [
                 BoxShadow(
